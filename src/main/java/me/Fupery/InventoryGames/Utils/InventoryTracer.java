@@ -4,7 +4,9 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -59,6 +61,9 @@ public class InventoryTracer {
                 for (Integer slot : items.keySet()) {
                     ItemStack item = items.get(slot);
                     item.addUnsafeEnchantment(Enchantment.LOOT_BONUS_MOBS, 1);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                    item.setItemMeta(meta);
                     inventory.setItem(slot, item);
                 }
                 return true;
