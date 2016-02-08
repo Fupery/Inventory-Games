@@ -33,7 +33,7 @@ public class CommandListener implements CommandExecutor {
                         + String.valueOf(InventoryGames.gameFactory.getGameList()));
             }
         });
-        commands.put("play", new AbstractCommand(null, "/invgame play <game> <player>", false) {
+        commands.put("play", new AbstractCommand("inventorygames.user", "/invgame play <game> <player>", false) {
             @Override
             public void runCommand(CommandSender sender, String[] args, ReturnMessage msg) {
 

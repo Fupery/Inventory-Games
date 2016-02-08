@@ -13,6 +13,6 @@ commands:
         <command> accept <playername> : Accept a player's game invite.
         <command> help : Displays help
 permissions:
-  InventoryGames.user:
+  inventorygames.user:
     description: Allows access to games
     default: op
