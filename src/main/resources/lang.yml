@@ -1,0 +1,19 @@
+english:
+  NO_PERMISSION: "You do not have permission to do this!"
+  NO_CONSOLE: "Only players can use this command."
+  GAME_NOT_FOUND: "Game '%s' could not be found. Use §r/invgame list§c for a list of available games."
+  PLAYER_NOT_FOUND: "Player '%s' could not be found."
+  REQUEST_SENT: "'%s' has been sent an invitation to play '%s'."
+  ALREADY_REQUESTED: "You have already sent an invitiation to '%s'."
+  REQUEST: "'%s' has invited you to play '%s'! Type §r/invgame accept§6 to play."
+  NO_REQUESTS: "You have no invitations to accept! Use §r/invgame play <game> <player>§c to invite a player to a game."
+  GAME_LIST: "Available games - "
+  COMMAND_HELP: "Use §r/invgame help§c for a full list of commands"
+  WINNER: "%s Wins!"
+  HELP:
+  - "§7------------------§6§l[§e§lInvMenu Help§6§l]§7------------------"
+  - "§6• §7/invgame play <game><player>§6➯§rInvite someone to play a game"
+  - "§6• §7/invgame accept                 §6➯§rAccept a game invitation"
+  - "§6• §7/invgame list                      §6➯§rList the games you can play"
+  - "§6• §7/invgame help                     §6➯§rDisplay this help menu"
+

@@ -1,0 +1,18 @@
+name: ${project.name}
+main: me.Fupery.InventoryGames.InventoryGames
+version: ${project.version}
+description: ${project.description}
+depends: []
+author: Fupery
+
+commands:
+  InvGame:
+      usage:  |
+        <command> list : List all available games.
+        <command> play <gameName> <playerName> : Invite a player to play a game.
+        <command> accept <playername> : Accept a player's game invite.
+        <command> help : Displays help
+permissions:
+  InventoryGames.user:
+    description: Allows access to games
+    default: op
