@@ -1,5 +1,6 @@
 package me.Fupery.InventoryGames.Commands;
 
+import me.Fupery.InventoryGames.GUI.PlayerMenu;
 import me.Fupery.InventoryGames.InventoryGames;
 import me.Fupery.InventoryGames.Utils.Lang;
 import org.bukkit.Bukkit;
@@ -33,7 +34,7 @@ public class CommandListener implements CommandExecutor {
                         + String.valueOf(InventoryGames.gameFactory.getGameList()));
             }
         });
-        commands.put("play", new AbstractCommand("inventorygames.user", "/invgame play <game> <player>", false) {
+        commands.put("play", new AbstractCommand("inventorygames.user", "/invgame play <game> [player]", false) {
             @Override
             public void runCommand(CommandSender sender, String[] args, ReturnMessage msg) {
 
@@ -41,44 +42,19 @@ public class CommandListener implements CommandExecutor {
                     sender.sendMessage(String.format(Lang.GAME_NOT_FOUND.message(), args[1]));
                     return;
                 }
-                final Player target = Bukkit.getPlayer(args[2]);
+                final Player target;
 
-                if (target == null) {
-                    sender.sendMessage(String.format(Lang.PLAYER_NOT_FOUND.message(), args[2]));
+                if (args.length > 2) {
+                    target = Bukkit.getPlayer(args[2]);
+                    if (target == null) {
+                        sender.sendMessage(String.format(Lang.PLAYER_NOT_FOUND.message(), args[2]));
+                        return;
+                    }
+                } else {
+                    PlayerMenu.openMenu((Player) sender, args[1]);
                     return;
                 }
-
-                Player player = (Player) sender;
-
-                if (pendingGames.containsKey(target.getUniqueId())) {
-
-                    if (pendingGames.get(target.getUniqueId()).getRequester().equals(player.getUniqueId())) {
-                        player.sendMessage(String.format(Lang.ALREADY_REQUESTED.message(), args[2]));
-                        return;
-                    }
-                }
-
-                if (pendingGames.containsKey(player.getUniqueId())) {
-                    GameRequest request = pendingGames.get(player.getUniqueId());
-
-                    if (request.getRequester().equals(target.getUniqueId())) {
-                        request.startGame();
-                        return;
-                    }
-                }
-
-                BukkitRunnable timeout = new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        if (pendingGames.containsKey(target.getUniqueId())) {
-                            pendingGames.remove(target.getUniqueId());
-                        }
-                    }
-                };
-                pendingGames.put(target.getUniqueId(),
-                        new GameRequest(((Player) sender), target, args[1], timeout));
-                sender.sendMessage(String.format(Lang.REQUEST_SENT.message(), args[2], args[1]));
-                timeout.runTaskLaterAsynchronously(InventoryGames.plugin(), 600);
+                processGameRequest((Player) sender, target, args[1]);
             }
         });
         commands.put("accept", new AbstractCommand(null, "/invgame accept", false) {
@@ -95,6 +71,38 @@ public class CommandListener implements CommandExecutor {
                 }
             }
         });
+    }
+
+    public void processGameRequest(Player player1, final Player player2, String gameName) {
+        if (pendingGames.containsKey(player2.getUniqueId())) {
+
+            if (pendingGames.get(player2.getUniqueId()).getRequester().equals(player1.getUniqueId())) {
+                player1.sendMessage(String.format(Lang.ALREADY_REQUESTED.message(), player2.getName()));
+                return;
+            }
+        }
+
+        if (pendingGames.containsKey(player1.getUniqueId())) {
+            GameRequest request = pendingGames.get(player1.getUniqueId());
+
+            if (request.getRequester().equals(player2.getUniqueId())) {
+                request.startGame();
+                return;
+            }
+        }
+
+        BukkitRunnable timeout = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (pendingGames.containsKey(player2.getUniqueId())) {
+                    pendingGames.remove(player2.getUniqueId());
+                }
+            }
+        };
+        pendingGames.put(player2.getUniqueId(),
+                new GameRequest(player1, player2, gameName, timeout));
+        player1.sendMessage(String.format(Lang.REQUEST_SENT.message(), player2.getName(), gameName));
+        timeout.runTaskLaterAsynchronously(InventoryGames.plugin(), 600);
     }
 
     @Override

@@ -9,7 +9,7 @@ commands:
   InvGame:
       usage:  |
         <command> list : List all available games.
-        <command> play <gameName> <playerName> : Invite a player to play a game.
+        <command> play <gameName> \[playerName\] : Invite a player to play a game.
         <command> accept <playername> : Accept a player's game invite.
         <command> help : Displays help
 permissions:
