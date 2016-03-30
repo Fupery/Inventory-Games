@@ -11,7 +11,7 @@ english:
   COMMAND_HELP: "Use §r/invgame help§c for a full list of commands"
   WINNER: "%s Wins!"
   HELP:
-  - "§7------------------§6§l[§e§lInvMenu Help§6§l]§7------------------"
+  - "§7------------------§6§l[§e§lInvGame Help§6§l]§7------------------"
   - "§6• §7/invgame play <game><player>§6➯§rInvite someone to play a game"
   - "§6• §7/invgame accept                 §6➯§rAccept a game invitation"
   - "§6• §7/invgame list                      §6➯§rList the games you can play"
