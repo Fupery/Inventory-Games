@@ -1,9 +1,11 @@
 package me.Fupery.InventoryGames;
 
 import me.Fupery.InventoryGames.Commands.CommandListener;
+import me.Fupery.InventoryGames.GUI.MenuHandler;
 import me.Fupery.InventoryGames.Games.Connect_Four;
 import me.Fupery.InventoryGames.Games.Tic_Tac_Toe;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.Reader;
@@ -14,6 +16,8 @@ public class InventoryGames extends JavaPlugin {
 
     public static final GameFactory gameFactory = new GameFactory();
     private GameListener gameListener;
+    private CommandListener commandListener;
+    private MenuHandler handler;
 
     public static void runTask(Runnable runnable) {
         JavaPlugin plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin("InventoryGames");
@@ -42,7 +46,10 @@ public class InventoryGames extends JavaPlugin {
 //        if (getConfig() == null) {
 //            saveDefaultConfig();
 //        }
-        getCommand("invgame").setExecutor(new CommandListener());
+        commandListener = new CommandListener();
+        handler = new MenuHandler(this);
+
+        getCommand("invgame").setExecutor(commandListener);
         gameFactory.registerGame("Tic_Tac_Toe", Tic_Tac_Toe.class);
         gameFactory.registerGame("Connect_Four", Connect_Four.class);
         gameListener = new GameListener(this);
@@ -65,4 +72,11 @@ public class InventoryGames extends JavaPlugin {
         return getTextResource(fileName);
     }
 
+    public CommandListener getCommandListener() {
+        return commandListener;
+    }
+
+    public MenuHandler getHandler() {
+        return handler;
+    }
 }

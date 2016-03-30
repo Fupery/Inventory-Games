@@ -12,7 +12,8 @@ import java.util.List;
 
 public enum Lang {
     NO_PERMISSION(true), NO_CONSOLE(true), GAME_NOT_FOUND(true), PLAYER_NOT_FOUND(true), REQUEST_SENT(false),
-    ALREADY_REQUESTED(true), REQUEST(false), NO_REQUESTS(true), GAME_LIST(false), COMMAND_HELP(true), WINNER(false);
+    ALREADY_REQUESTED(true), REQUEST(false), NO_REQUESTS(true), GAME_LIST(false), COMMAND_HELP(true), WINNER(false),
+    INVITE(false), CHOOSE_PLAYER(false);
     public static final String prefix = "§e[InvGames] ";
     final boolean isErrorMessage;
     String message;

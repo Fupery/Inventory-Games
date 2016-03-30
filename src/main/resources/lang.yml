@@ -10,10 +10,12 @@ english:
   GAME_LIST: "Available games - "
   COMMAND_HELP: "Use §r/invgame help§c for a full list of commands"
   WINNER: "%s Wins!"
+  INVITE: "§l§aClick to invite"
+  CHOOSE_PLAYER: "§lChoose a player:"
   HELP:
   - "§7------------------§6§l[§e§lInvGame Help§6§l]§7------------------"
-  - "§6• §7/invgame play <game><player>§6➯§rInvite someone to play a game"
-  - "§6• §7/invgame accept                 §6➯§rAccept a game invitation"
-  - "§6• §7/invgame list                      §6➯§rList the games you can play"
-  - "§6• §7/invgame help                     §6➯§rDisplay this help menu"
+  - "§6• §7/invgame play <game>          §6➯§rInvite someone to play a game"
+  - "§6• §7/invgame accept                §6➯§rAccept a game invitation"
+  - "§6• §7/invgame list                     §6➯§rList the games you can play"
+  - "§6• §7/invgame help                    §6➯§rDisplay this help menu"
 
