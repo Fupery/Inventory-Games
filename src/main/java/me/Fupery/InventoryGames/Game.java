@@ -82,7 +82,7 @@ public abstract class Game {
         }
         if (players == null) {
             player.sendMessage("Not enough players!");
-            player.playSound(player.getLocation(), Sound.ITEM_BREAK, 1, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
             return false;
         }
         return true;

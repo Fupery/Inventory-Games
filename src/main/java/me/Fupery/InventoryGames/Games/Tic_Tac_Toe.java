@@ -37,13 +37,13 @@ public class Tic_Tac_Toe extends Game {
 
             if (evaluateVictory(player, slot)) {
                 update();
-                player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
-                players.getWaitingPlayer().playSound(player.getLocation(), Sound.FIZZ, 1, 1);
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                players.getWaitingPlayer().playSound(player.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 1, 1);
                 players.sendMessage(String.format(Lang.WINNER.message(), player.getName()));
                 running = false;
 
             } else {
-                player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1, 1);
+                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 players.nextTurn();
                 updateTurn(inventory.getContents());
             }

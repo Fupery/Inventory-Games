@@ -22,7 +22,7 @@ public class GameRequest {
         this.gameName = gameName;
         this.timeout = timeout;
         target.sendMessage(String.format(Lang.REQUEST.message(), requester.getName(), gameName));
-        target.playSound(target.getLocation(), Sound.ORB_PICKUP, 1, 1);
+        target.playSound(target.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
     }
 
     public Game startGame() {

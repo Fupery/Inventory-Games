@@ -95,14 +95,14 @@ public class Connect_Four extends Game {
 
                 if (evaluateVictory(currentPlayer, previousSlot)) {
                     Player loser = players.getWaitingPlayer();
-                    currentPlayer.playSound(currentPlayer.getLocation(), Sound.LEVEL_UP, 1, 1);
-                    loser.playSound(loser.getLocation(), Sound.FIZZ, 1, 1);
+                    currentPlayer.playSound(currentPlayer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                    loser.playSound(loser.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 1, 1);
                     players.sendMessage(String.format(Lang.WINNER.message(), currentPlayer.getName()));
                     running = false;
                     update();
 
                 } else {
-                    players.playSound(Sound.WOOD_CLICK);
+                    players.playSound(Sound.BLOCK_NOTE_SNARE);
                     players.nextTurn();
                     updateTurn(inventory.getContents());
                 }
