@@ -3,6 +3,8 @@ package me.Fupery.InventoryGames.Games;
 import me.Fupery.InventoryGames.Game;
 import me.Fupery.InventoryGames.InventoryGames;
 import me.Fupery.InventoryGames.Utils.InventoryTracer;
+import me.Fupery.InventoryMenu.API.MenuButton;
+import me.Fupery.InventoryMenu.Utils.SoundCompat;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -96,7 +98,7 @@ public class Connect_Four extends Game {
                     endGame(currentPlayer, players.getWaitingPlayer());
 
                 } else {
-                    players.playSound(Sound.BLOCK_NOTE_SNARE);
+                    players.playSound(SoundCompat.SNARE);
                     players.nextTurn();
                     updateTurn(inventory.getContents());
                 }

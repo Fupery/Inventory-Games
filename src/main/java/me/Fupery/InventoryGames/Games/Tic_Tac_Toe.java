@@ -2,6 +2,7 @@ package me.Fupery.InventoryGames.Games;
 
 import me.Fupery.InventoryGames.Game;
 import me.Fupery.InventoryGames.Utils.InventoryTracer;
+import me.Fupery.InventoryMenu.Utils.SoundCompat;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -38,7 +39,7 @@ public class Tic_Tac_Toe extends Game {
                 endGame(player, players.getWaitingPlayer());
 
             } else {
-                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                SoundCompat.DING.play(player);
                 players.nextTurn();
                 updateTurn(inventory.getContents());
             }

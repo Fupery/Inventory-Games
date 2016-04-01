@@ -3,6 +3,7 @@ package me.Fupery.InventoryGames.Commands;
 import me.Fupery.InventoryGames.Game;
 import me.Fupery.InventoryGames.InventoryGames;
 import me.Fupery.InventoryGames.Utils.Lang;
+import me.Fupery.InventoryMenu.Utils.SoundCompat;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -22,7 +23,7 @@ public class GameRequest {
         this.gameName = gameName;
         this.timeout = timeout;
         target.sendMessage(String.format(Lang.REQUEST.message(), requester.getName(), gameName));
-        target.playSound(target.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+        SoundCompat.DING.play(target);
     }
 
     public Game startGame() {
