@@ -12,5 +12,6 @@ public class MenuHandler extends Menu {
     }
 
     @Override
-    public void open(JavaPlugin plugin, Player player) { }
+    public void open(JavaPlugin plugin, Player player) {
+    }
 }

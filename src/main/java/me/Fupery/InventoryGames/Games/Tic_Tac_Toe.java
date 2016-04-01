@@ -2,7 +2,6 @@ package me.Fupery.InventoryGames.Games;
 
 import me.Fupery.InventoryGames.Game;
 import me.Fupery.InventoryGames.Utils.InventoryTracer;
-import me.Fupery.InventoryGames.Utils.Lang;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -36,11 +35,7 @@ public class Tic_Tac_Toe extends Game {
             inventory.setItem(slot, itemStack);
 
             if (evaluateVictory(player, slot)) {
-                update();
-                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                players.getWaitingPlayer().playSound(player.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 1, 1);
-                players.sendMessage(String.format(Lang.WINNER.message(), player.getName()));
-                running = false;
+                endGame(player, players.getWaitingPlayer());
 
             } else {
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);

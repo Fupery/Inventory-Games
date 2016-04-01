@@ -3,7 +3,6 @@ package me.Fupery.InventoryGames.Games;
 import me.Fupery.InventoryGames.Game;
 import me.Fupery.InventoryGames.InventoryGames;
 import me.Fupery.InventoryGames.Utils.InventoryTracer;
-import me.Fupery.InventoryGames.Utils.Lang;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -94,12 +93,7 @@ public class Connect_Four extends Game {
                 Player currentPlayer = players.getCurrentPlayer();
 
                 if (evaluateVictory(currentPlayer, previousSlot)) {
-                    Player loser = players.getWaitingPlayer();
-                    currentPlayer.playSound(currentPlayer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                    loser.playSound(loser.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 1, 1);
-                    players.sendMessage(String.format(Lang.WINNER.message(), currentPlayer.getName()));
-                    running = false;
-                    update();
+                    endGame(currentPlayer, players.getWaitingPlayer());
 
                 } else {
                     players.playSound(Sound.BLOCK_NOTE_SNARE);

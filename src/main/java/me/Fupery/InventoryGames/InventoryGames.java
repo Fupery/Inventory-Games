@@ -4,10 +4,14 @@ import me.Fupery.InventoryGames.Commands.CommandListener;
 import me.Fupery.InventoryGames.GUI.MenuHandler;
 import me.Fupery.InventoryGames.Games.Connect_Four;
 import me.Fupery.InventoryGames.Games.Tic_Tac_Toe;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Reader;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,6 +22,8 @@ public class InventoryGames extends JavaPlugin {
     private GameListener gameListener;
     private CommandListener commandListener;
     private MenuHandler handler;
+    private YamlConfiguration data;
+    private boolean saveScheduled;
 
     public static void runTask(Runnable runnable) {
         JavaPlugin plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin("InventoryGames");
@@ -37,15 +43,31 @@ public class InventoryGames extends JavaPlugin {
         return plugin().gameListener.games;
     }
 
+    private static GameFactory getGameFactory() {
+        return gameFactory;
+    }
+
+    private static int[] readDataTag(String string) {
+        String[] split = StringUtils.split(string, ':');
+        return new int[]{Integer.parseInt(split[0]), Integer.parseInt(split[1])};
+    }
+
     @Override
     public void onEnable() {
 
-//        if (!getDataFolder().exists()) {
-//            getDataFolder().mkdir();
-//        }
-//        if (getConfig() == null) {
-//            saveDefaultConfig();
-//        }
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdir();
+        }
+        File file = new File(getDataFolder(), "data.yml");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        data = YamlConfiguration.loadConfiguration(file);
+
         commandListener = new CommandListener();
         handler = new MenuHandler(this);
 
@@ -53,6 +75,7 @@ public class InventoryGames extends JavaPlugin {
         gameFactory.registerGame("Tic_Tac_Toe", Tic_Tac_Toe.class);
         gameFactory.registerGame("Connect_Four", Connect_Four.class);
         gameListener = new GameListener(this);
+        saveScheduled = false;
     }
 
     @Override
@@ -66,6 +89,11 @@ public class InventoryGames extends JavaPlugin {
                 games.get(id).stop();
             }
         }
+        try {
+            data.save(new File(getDataFolder(), "data.yml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Reader getTextResourceFile(String fileName) {
@@ -78,5 +106,49 @@ public class InventoryGames extends JavaPlugin {
 
     public MenuHandler getHandler() {
         return handler;
+    }
+
+    void logPlayerStats(UUID player, String game, boolean victory) {
+        ConfigurationSection gameData = getGameData(game);
+        int[] winStats;
+        String uuid = player.toString();
+        int i = victory ? 0 : 1;
+
+        winStats = gameData.contains(uuid) ? readDataTag(gameData.getString(uuid)) : new int[]{0, 0};
+        winStats[i]++;
+        gameData.set(uuid, winStats[0] + ":" + winStats[1]);
+        savePlayerStats();
+    }
+
+    public String[] getPlayerStats(UUID player, String game) {
+        ConfigurationSection gameData = getGameData(game);
+        int[] winStats;
+        String uuid = player.toString();
+        String prefix = " §r➯ §6";
+
+        winStats = gameData.contains(uuid) ? readDataTag(gameData.getString(uuid)) : new int[]{0, 0};
+        return new String[]{prefix + winStats[0] + " Wins", prefix + winStats[1] + " Losses"};
+    }
+
+    private ConfigurationSection getGameData(String gameName) {
+        String game = gameName.toUpperCase();
+        return (data.contains(game)) ? data.getConfigurationSection(game) : data.createSection(game);
+    }
+
+    private void savePlayerStats() {
+        if (!saveScheduled) {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(this, new Runnable() {
+                @Override
+                public void run() {
+                    saveScheduled = false;
+                    try {
+                        getConfig().save(new File(getDataFolder(), "data.yml"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, 6000);//five minutes
+            saveScheduled = true;
+        }
     }
 }

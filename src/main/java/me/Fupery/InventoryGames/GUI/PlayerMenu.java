@@ -2,7 +2,8 @@ package me.Fupery.InventoryGames.GUI;
 
 import me.Fupery.InventoryGames.InventoryGames;
 import me.Fupery.InventoryGames.Utils.Lang;
-import me.Fupery.InventoryMenu.API.*;
+import me.Fupery.InventoryMenu.API.ListMenu;
+import me.Fupery.InventoryMenu.API.MenuButton;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -25,10 +26,23 @@ public class PlayerMenu extends ListMenu {
         this.owner = player.getUniqueId();
     }
 
+    public static void openMenu(Player player, String gameName) {
+        new PlayerMenu(player, gameName).open(InventoryGames.plugin(), player);
+    }
+
+    private static String[] generateLore(Player player, String gameName) {
+        String[] winStats = InventoryGames.plugin().getPlayerStats(player.getUniqueId(), gameName);
+        if (winStats == null) {
+            return new String[]{player.getName(), Lang.INVITE.rawMessage()};
+        }
+        return new String[]{player.getName(), Lang.INVITE.rawMessage(), winStats[0], winStats[1]};
+    }
+
     @Override
     public MenuButton[] generateListButtons() {
         final Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         final List<MenuButton> buttons = new ArrayList<>();
+        final InventoryGames plugin = InventoryGames.plugin();
 
         boolean foundPlayer = false;
         int i = 0;
@@ -47,7 +61,7 @@ public class PlayerMenu extends ListMenu {
         private UUID target;
 
         InviteButton(Player player) {
-            super(Material.SKULL_ITEM, player.getName(), Lang.INVITE.rawMessage());
+            super(Material.SKULL_ITEM, generateLore(player, gameName));
 
             setDurability((short) 3);
             SkullMeta meta = (SkullMeta) getItemMeta();
@@ -66,8 +80,5 @@ public class PlayerMenu extends ListMenu {
                 player.closeInventory();
             }
         }
-    }
-    public static void openMenu(Player player, String gameName) {
-        new PlayerMenu(player, gameName).open(InventoryGames.plugin(), player);
     }
 }
