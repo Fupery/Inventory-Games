@@ -2,6 +2,7 @@ package me.Fupery.InventoryGames;
 
 import me.Fupery.InventoryGames.Utils.Lang;
 import me.Fupery.InventoryGames.Utils.PlayerPair;
+import me.Fupery.InventoryMenu.Utils.SoundCompat;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -73,8 +74,9 @@ public abstract class Game {
     }
 
     protected void endGame(final Player victor, final Player loser) {
-        victor.playSound(victor.getLocation(), Sound.LEVEL_UP, 1, 1);
-        loser.playSound(loser.getLocation(), Sound.FIZZ, 1, 1);
+        update();
+        SoundCompat.LEVEL_UP.play(victor);
+        SoundCompat.FIZZ.play(loser);
         players.sendMessage(String.format(Lang.WINNER.message(), victor.getName()));
         running = false;
         update();
@@ -99,7 +101,7 @@ public abstract class Game {
         }
         if (players == null) {
             player.sendMessage("Not enough players!");
-            player.playSound(player.getLocation(), Sound.ITEM_BREAK, 1, 1);
+            SoundCompat.BREAK.play(player);
             return false;
         }
         return true;

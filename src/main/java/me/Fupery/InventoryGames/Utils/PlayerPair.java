@@ -1,5 +1,6 @@
 package me.Fupery.InventoryGames.Utils;
 
+import me.Fupery.InventoryMenu.Utils.SoundCompat;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -77,11 +78,11 @@ public class PlayerPair implements Iterable<PlayerPair.GamePlayer> {
         Bukkit.getPlayer(player2.getPlayer()).sendMessage(message);
     }
 
-    public void playSound(Sound sound) {
+    public void playSound(SoundCompat sound) {
         Player player1 = Bukkit.getPlayer(this.player1.getPlayer());
         Player player2 = Bukkit.getPlayer(this.player2.getPlayer());
-        player1.playSound(player1.getLocation(), sound, 1, 1);
-        player2.playSound(player2.getLocation(), sound, 1, 1);
+        sound.play(player1);
+        sound.play(player2);
     }
 
     public void nextTurn() {

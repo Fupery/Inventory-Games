@@ -4,10 +4,12 @@ import me.Fupery.InventoryGames.Commands.CommandListener;
 import me.Fupery.InventoryGames.GUI.MenuHandler;
 import me.Fupery.InventoryGames.Games.Connect_Four;
 import me.Fupery.InventoryGames.Games.Tic_Tac_Toe;
+import me.Fupery.InventoryMenu.API.InventoryMenu;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -54,7 +56,6 @@ public class InventoryGames extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         if (!getDataFolder().exists()) {
             getDataFolder().mkdir();
         }
@@ -82,6 +83,7 @@ public class InventoryGames extends JavaPlugin {
     public void onDisable() {
 
         ConcurrentHashMap<UUID, Game> games = gameListener.games;
+        ConcurrentHashMap<UUID, InventoryMenu> openMenus = handler.getListener().getOpenMenus();
 
         for (UUID id : games.keySet()) {
 
@@ -89,6 +91,15 @@ public class InventoryGames extends JavaPlugin {
                 games.get(id).stop();
             }
         }
+
+        for (UUID id : openMenus.keySet()) {
+
+            if (openMenus.get(id) != null) {
+                openMenus.get(id).close(Bukkit.getPlayer(id));
+            }
+        }
+
+
         try {
             data.save(new File(getDataFolder(), "data.yml"));
         } catch (IOException e) {
