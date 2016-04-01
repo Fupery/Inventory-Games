@@ -1,5 +1,6 @@
 package me.Fupery.InventoryGames;
 
+import me.Fupery.InventoryGames.Utils.Lang;
 import me.Fupery.InventoryGames.Utils.PlayerPair;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -18,6 +19,7 @@ public abstract class Game {
     protected boolean running = false;
     protected boolean updatingMenu = false;
     protected InventoryTemplate inventoryTemplate;
+    protected String name;
 
     public boolean start() {
 
@@ -70,6 +72,21 @@ public abstract class Game {
         });
     }
 
+    protected void endGame(final Player victor, final Player loser) {
+        victor.playSound(victor.getLocation(), Sound.LEVEL_UP, 1, 1);
+        loser.playSound(loser.getLocation(), Sound.FIZZ, 1, 1);
+        players.sendMessage(String.format(Lang.WINNER.message(), victor.getName()));
+        running = false;
+        update();
+        InventoryGames.runTaskAsync(new Runnable() {
+            @Override
+            public void run() {
+                InventoryGames.plugin().logPlayerStats(victor.getUniqueId(), name, true);
+                InventoryGames.plugin().logPlayerStats(loser.getUniqueId(), name, false);
+            }
+        });
+    }
+
     public boolean click(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
@@ -96,6 +113,10 @@ public abstract class Game {
 
     public boolean isUpdating() {
         return updatingMenu;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     protected class InventoryTemplate {
