@@ -23,7 +23,7 @@ public class GameRequest {
         this.gameName = gameName;
         this.timeout = timeout;
         target.sendMessage(String.format(Lang.REQUEST.message(), requester.getName(), gameName));
-        SoundCompat.DING.play(target);
+        SoundCompat.ENTITY_EXPERIENCE_ORB_TOUCH.play(target);
     }
 
     public Game startGame() {

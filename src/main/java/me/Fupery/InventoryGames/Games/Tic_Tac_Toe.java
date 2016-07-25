@@ -39,7 +39,7 @@ public class Tic_Tac_Toe extends Game {
                 endGame(player, players.getWaitingPlayer());
 
             } else {
-                SoundCompat.DING.play(player);
+                SoundCompat.ENTITY_EXPERIENCE_ORB_TOUCH.play(player);
                 players.nextTurn();
                 updateTurn(inventory.getContents());
             }

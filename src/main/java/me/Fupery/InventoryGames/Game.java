@@ -75,8 +75,8 @@ public abstract class Game {
 
     protected void endGame(final Player victor, final Player loser) {
         update();
-        SoundCompat.LEVEL_UP.play(victor);
-        SoundCompat.FIZZ.play(loser);
+        SoundCompat.ENTITY_PLAYER_LEVELUP.play(victor);
+        SoundCompat.BLOCK_LAVA_EXTINGUISH.play(loser);
         players.sendMessage(String.format(Lang.WINNER.message(), victor.getName()));
         running = false;
         update();
@@ -101,7 +101,7 @@ public abstract class Game {
         }
         if (players == null) {
             player.sendMessage("Not enough players!");
-            SoundCompat.BREAK.play(player);
+            SoundCompat.ENTITY_ITEM_BREAK.play(player);
             return false;
         }
         return true;

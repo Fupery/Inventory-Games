@@ -98,7 +98,7 @@ public class Connect_Four extends Game {
                     endGame(currentPlayer, players.getWaitingPlayer());
 
                 } else {
-                    players.playSound(SoundCompat.SNARE);
+                    players.playSound(SoundCompat.BLOCK_NOTE_SNARE);
                     players.nextTurn();
                     updateTurn(inventory.getContents());
                 }
