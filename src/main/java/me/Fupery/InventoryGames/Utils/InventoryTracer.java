@@ -165,7 +165,7 @@ public class InventoryTracer {
             x = -x;
             y = -y;
             currentSlot = initialSlot;
-            flipped = true;
+            flipped = !flipped;
         }
     }
 }
