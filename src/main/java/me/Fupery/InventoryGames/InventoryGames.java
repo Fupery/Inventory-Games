@@ -73,8 +73,10 @@ public class InventoryGames extends JavaPlugin {
         handler = new MenuHandler(this);
 
         getCommand("invgame").setExecutor(commandListener);
+        //register games here----------------------------------------
         gameFactory.registerGame("Tic_Tac_Toe", Tic_Tac_Toe.class);
         gameFactory.registerGame("Connect_Four", Connect_Four.class);
+        //-----------------------------------------------------------
         gameListener = new GameListener(this);
         saveScheduled = false;
     }

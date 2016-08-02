@@ -21,6 +21,11 @@ public class PlayerPair implements Iterable<PlayerPair.GamePlayer> {
         this.player2 = player2;
     }
 
+    /**
+     * @param player1
+     * @param player2
+     * @return A new player pair with randomly assigned item tokens to represent their moves in-game.
+     */
     public static PlayerPair generateTokenPair(UUID player1, UUID player2) {
 
         Material[] materials;
@@ -60,24 +65,40 @@ public class PlayerPair implements Iterable<PlayerPair.GamePlayer> {
         return new TokenIterator(this);
     }
 
+    /**
+     * @return The player whose turn it is
+     */
     public Player getCurrentPlayer() {
         return turn ? Bukkit.getPlayer(player1.getPlayer()) : Bukkit.getPlayer(player2.getPlayer());
     }
 
+    /**
+     * @return The player whose turn it isn't
+     */
     public Player getWaitingPlayer() {
         return !turn ? Bukkit.getPlayer(player1.getPlayer()) : Bukkit.getPlayer(player2.getPlayer());
     }
 
+    /**
+     * @param player
+     * @return Check if it is currently this players' turn
+     */
     public boolean isPlayersTurn(Player player) {
         GamePlayer currentPlayer = turn ? player1 : player2;
         return currentPlayer.getPlayer().equals(player.getUniqueId());
     }
 
+    /**
+     * @param message Sends a message ot both players
+     */
     public void sendMessage(String message) {
         Bukkit.getPlayer(player1.getPlayer()).sendMessage(message);
         Bukkit.getPlayer(player2.getPlayer()).sendMessage(message);
     }
 
+    /**
+     * @param sound Plays a sound for both players
+     */
     public void playSound(SoundCompat sound) {
         Player player1 = Bukkit.getPlayer(this.player1.getPlayer());
         Player player2 = Bukkit.getPlayer(this.player2.getPlayer());
@@ -85,6 +106,9 @@ public class PlayerPair implements Iterable<PlayerPair.GamePlayer> {
         sound.play(player2);
     }
 
+    /**
+     * Advances the current turn, giving it to the waiting player
+     */
     public void nextTurn() {
         turn = !turn;
     }
@@ -100,6 +124,10 @@ public class PlayerPair implements Iterable<PlayerPair.GamePlayer> {
         return null;
     }
 
+    /**
+     * @param player The player
+     * @return The player's token item, representing their place on the board
+     */
     public Material getToken(Player player) {
 
         for (GamePlayer token : this) {
@@ -119,6 +147,9 @@ public class PlayerPair implements Iterable<PlayerPair.GamePlayer> {
         return Bukkit.getPlayer(player2.player);
     }
 
+    /**
+     * Represents a player in a game
+     */
     public static class GamePlayer {
 
         private UUID player;
@@ -157,6 +188,11 @@ public class PlayerPair implements Iterable<PlayerPair.GamePlayer> {
             GamePlayer player = (i == 0 ? playerPair.player1 : playerPair.player2);
             i++;
             return player;
+        }
+
+        @Override
+        public void remove() {
+            //do nothing
         }
     }
 

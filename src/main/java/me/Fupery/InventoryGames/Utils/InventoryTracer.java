@@ -11,6 +11,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * A utility for finding consecutive chains of the same kind of item in an inventory
+ */
 public class InventoryTracer {
 
     private final int width;
@@ -18,6 +21,11 @@ public class InventoryTracer {
     private final int chainLength;
     private final Inventory inventory;
 
+    /**
+     * @param inventory The Inventory the game is taking place in
+     * @param chainItem The item the chain is made of
+     * @param chainLength The minimum required length of a chain
+     */
     public InventoryTracer(Inventory inventory, Material chainItem, int chainLength) {
         this.inventory = inventory;
         this.chainLength = chainLength;
@@ -42,6 +50,10 @@ public class InventoryTracer {
         }
     }
 
+    /**
+     * @param clickedSlot The slot in the inventory clicked
+     * @return True if a chain of items of the supplied length is found, false if not
+     */
     public boolean findChain(int clickedSlot) {
 
         for (Direction direction : Direction.values()) {
@@ -142,6 +154,11 @@ public class InventoryTracer {
                 return inventory.getItem(currentSlot);
             }
             return null;
+        }
+
+        @Override
+        public void remove() {
+            //do nothing
         }
 
         private void flipDirection() {

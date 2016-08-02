@@ -14,6 +14,13 @@ import org.bukkit.inventory.ItemStack;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Represents an Inventory Game
+ * To create a new game, you must do the following:
+ *      1. Create a class extending Game
+ *      2. Call GameFactory#registerGame(YourGameName, YourGameClass) in InventoryGames#onEnable()
+ * And you're done! Players will now be able to play the game with /invgame play <YourGameName> [Player]
+ */
 public abstract class Game {
 
     protected PlayerPair players;
