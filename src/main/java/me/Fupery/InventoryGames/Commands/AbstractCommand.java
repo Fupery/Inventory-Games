@@ -42,7 +42,7 @@ public abstract class AbstractCommand {
                     returnMsg.message = Lang.NO_CONSOLE.message();
 
                 } else if (args.length < minArgs || args.length > maxArgs) {
-                    returnMsg.message = Lang.prefix + ChatColor.RED + ", " + usage;
+                    returnMsg.message = Lang.prefix + ChatColor.RED + usage;
 
                 } else {
                     runCommand(sender, args, returnMsg);
