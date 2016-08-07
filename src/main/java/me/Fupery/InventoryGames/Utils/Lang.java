@@ -24,7 +24,7 @@ public enum Lang {
 //        String language = plugin.getConfig().getString("language");
         String language = "english";
         FileConfiguration langFile =
-                YamlConfiguration.loadConfiguration(plugin.getTextResourceFile("Lang.yml"));
+                YamlConfiguration.loadConfiguration(plugin.getTextResourceFile("lang.yml"));
 
         if (!langFile.contains(language)) {
             language = "english";
@@ -58,7 +58,7 @@ public enum Lang {
 //            String language = plugin.getConfig().getString("language");
             String language = "english";
             FileConfiguration langFile =
-                    YamlConfiguration.loadConfiguration(plugin.getTextResourceFile("Lang.yml"));
+                    YamlConfiguration.loadConfiguration(plugin.getTextResourceFile("lang.yml"));
 
             if (!langFile.contains(language)) {
                 language = "english";
