@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class PlayerPair implements Iterable<PlayerPair.GamePlayer> {
 
@@ -19,6 +20,7 @@ public class PlayerPair implements Iterable<PlayerPair.GamePlayer> {
     PlayerPair(GamePlayer player1, GamePlayer player2) {
         this.player1 = player1;
         this.player2 = player2;
+        ThreadLocalRandom.current().nextBoolean();
     }
 
     /**
